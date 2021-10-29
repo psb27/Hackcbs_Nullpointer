@@ -4,10 +4,11 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-pragma solidity >=0.4.22 <0.9.0;
 
 contract CryptoState is ERC721, Ownable, ReentrancyGuard {
-    string public nameOf = "Govt of India  Cryptostate  Poratal";
+    using Counters for Counters.Counter;
+
+    string public nameOf = "Govt of India Cryptostate Poratal";
 
     // this is contract's token collection name
     string public collectionName;
@@ -19,7 +20,7 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
     //listing price
     uint256 listingPrice = 0.1 ether;
 
-     struct CryptoState {
+    struct CryptoState {
         uint256 tokenId;
         string tokenName;
         string tokenURI;
@@ -30,7 +31,7 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         bool forSale;
         string placeAddress;
     }
-       event CryptoStateItemCreate(
+    event CryptoStateItemCreate(
         uint256 tokenId,
         string tokenName,
         string tokenURI,
@@ -39,7 +40,7 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         address payable oldowenr,
         uint256 price
     );
-      // map cryptoStata's token id to cryptostate
+    // map cryptoStata's token id to cryptostate
     mapping(uint256 => CryptoState) public allCryptostate;
     // token validation
     mapping(string => bool) private tokenNameExists;
@@ -50,18 +51,23 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         collectionName = name();
         collectionNameSymbol = symbol();
     }
+// this function is used to transfer ether to govt account
+ function withdraw() public payable onlyOwner {
+        address payable _owner = payable(owner());
+        _owner.transfer(address(this).balance);
+    }
+    // create new cryptostate
+    // Creation
 
-    // create new cryptoState 
-    // creation
-    function mintCryptostate (
-         string memory _name,
+    function mintCryptoState(
+        string memory _name,
         string memory _tokenURI,
         uint256 _price,
         string memory _placeAddress,
         address _owner,
         bool _forSell
-    ) public payable onlyOwner nonReentrant{
-          // address should to be valide
+    ) public payable onlyOwner nonReentrant {
+        // address should to be valide
         require(msg.sender != address(0));
         // price must be grater then 0
         require(_price > 0, "Price must be at least 1 wei");
@@ -109,5 +115,10 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
             payable(address(0)),
             _price
         );
+    }
+
+       //getting the pricing list
+    function getListingPrice() public view returns (uint256) {
+        return listingPrice;
     }
 }
