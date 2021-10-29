@@ -123,6 +123,7 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
     }
     // get owner of the token
     function getTokenOwner(uint256 _tokenId) public view returns (address) {
+        
         address _tokenOwer = ownerOf(_tokenId);
         return _tokenOwer;
     }
@@ -146,9 +147,5 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         uint256 totalNumberofTokensowned = balanceOf(_owner);
         return totalNumberofTokensowned;
     }
-       // returns if some token is exits or not
-    function getTokenExists(uint256 _tokenId) public view returns (bool) {
-        bool tokenExists = _exists(_tokenId);
-        return tokenExists;
-    }
+  
 }
