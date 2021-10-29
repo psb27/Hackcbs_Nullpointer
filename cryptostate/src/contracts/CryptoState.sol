@@ -121,4 +121,34 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
     }
+    // get owner of the token
+    function getTokenOwner(uint256 _tokenId) public view returns (address) {
+        address _tokenOwer = ownerOf(_tokenId);
+        return _tokenOwer;
+    }
+    // to feel after sometime
+    function getTokenMetadata(uint256 _tokenId)
+        public
+        view
+        returns (string memory)
+    {
+    string memory tokenMetaData = tokenURI(_tokenId);
+    return tokenMetaData;
+    }
+
+     // get the number of token that created till the function is called
+    function getNumberOfTokensMinted() public view returns (uint256) {
+        uint256 totalNumberofTokensMinted = cryptoStateCouter.current();
+        return totalNumberofTokensMinted;
+    }
+      // get the number of the token owned by the  caller of the function
+    function TokenownedByaddress(address _owner) public view returns (uint256) {
+        uint256 totalNumberofTokensowned = balanceOf(_owner);
+        return totalNumberofTokensowned;
+    }
+       // returns if some token is exits or not
+    function getTokenExists(uint256 _tokenId) public view returns (bool) {
+        bool tokenExists = _exists(_tokenId);
+        return tokenExists;
+    }
 }
