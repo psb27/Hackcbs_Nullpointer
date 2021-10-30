@@ -10,6 +10,11 @@ import Property from "./Componenets/Property_page/Property";
 function App() {
 
   return (
+
+    <>
+      <Navbar/>
+    </>
+
     <div className="App">
  <Switch>
 
@@ -22,6 +27,7 @@ function App() {
    </Switch>
 
     </div>
+
 
   );
 }
