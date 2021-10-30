@@ -1,0 +1,17 @@
+<<<<<<< Updated upstream
+=======
+/*.navbar-menu {
+  width: 80%;
+}
+
+.navbar-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.signup-button {
+    contain: content;
+}*/
+
+>>>>>>> Stashed changes
