@@ -43,6 +43,18 @@ contract(CryptoState, ([deployer, author, tipper]) => {
     let Number_of_token_minted = await cryptostate.getNumberOfTokensMinted();
 
     console.log(Number_of_token_minted);
-    // console.log(tokens_exite);
+    
+  });
+  it("testing funcition of the smart contract", async () => {
+ 
+
+    let token_owner = await cryptostate.getTokenOwner(1);
+
+    console.log(token_owner);
+
+    let Number_of_token_minted = await cryptostate.getNumberOfTokensMinted();
+
+    console.log(Number_of_token_minted.toNumber());
+    
   });
 });

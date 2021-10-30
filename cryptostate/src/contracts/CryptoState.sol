@@ -147,5 +147,39 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         uint256 totalNumberofTokensowned = balanceOf(_owner);
         return totalNumberofTokensowned;
     }
+    function buyToken(uint256 _tokenId) public payable{
+        require(msg.sender != address(0), "address must not be null");
+        // token it must be exits
+        require(_exists(_tokenId), "token must be exits on the contract");
+        // get the owner of the token
+        address tokenOnwer = ownerOf(_tokenId);
+        // we can not buy over own token
+        require(msg.sender != tokenOnwer, "you can not buy your own token");
+
+          // getting token form the block chain
+        CryptoState memory cryptostate = allCryptostate[_tokenId];
+  // the price must be equal to or greater then
+        require(
+            msg.value >= cryptostate.price,
+            "please Enter full price to buy"
+        );
+         // it must be marked as for sale
+        require(cryptostate.forSale);
+ // tansfer the owner ship
+        _transfer(tokenOnwer, msg.sender, _tokenId);
+ // getting the current owner of the smart contract
+        address payable sendTo = cryptostate.currentOwner;
+          // sending the token worth to the owner of the  token
+        sendTo.transfer(msg.value);
+
+            //update  pervious owner
+        cryptostate.perviousOwner = cryptostate.currentOwner;
+        // update the current owner
+        cryptostate.currentOwner = payable(msg.sender);
+
+        // set and update the data of token
+        allCryptostate[_tokenId] = cryptostate;
+
+    }
   
 }
