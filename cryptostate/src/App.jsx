@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router";
 import './App.css'
 import Detiles from "./Componenets/Detiles_page/Detiles";
 import Navbar from './Componenets/navbar/Navbar'
-import EngagementCardDemo from "./Componenets/Property_page/card/Card";
+import EngagementCardDemo from "./Componenets/Register_page/Register";
 import Property from "./Componenets/Property_page/Property";
 function App() {
 
@@ -13,9 +13,10 @@ function App() {
     <div className="App">
  <Switch>
 
-          <Route path="/moreInfo" component={Detiles}>
+          {/* <Route path="/moreInfo" component={Detiles}>
           <Detiles/>
-          </Route>
+          </Route> */}
+          <EngagementCardDemo/>
 
 <Property/>     
 
