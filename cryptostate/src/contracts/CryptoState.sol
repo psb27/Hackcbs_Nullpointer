@@ -72,10 +72,10 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         // price must be grater then 0
         require(_price > 0, "Price must be at least 1 wei");
         // listing price should to be equal
-        // require(
-        //     msg.value >= listingPrice,
-        //     "Price must be equal to listing price"
-        // );
+        require(
+            msg.value >= listingPrice,
+            "Price must be equal to listing price"
+        );
 
         //token URI must be uniqe
         require(!tokenURIExists[_tokenURI]);
@@ -233,18 +233,6 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
     // get all the sold proudct
     // we can do for this at front end
     // fetch my own NFT we can do for it on front-end
-    // get all data 
-    function getAlldataofUser()public view  returns( CryptoState [] memory ) {
-        uint256 numberofToken = cryptoStateCouter.current();
-         CryptoState [] memory items = new CryptoState[](numberofToken);
-    uint currentIndex = 0;
-    for (uint i = 0; i < numberofToken; i++) {
-        uint currentId = i + 1;
-         CryptoState storage currentItem = allCryptostate[currentId];
-        items[currentIndex] = currentItem;
-        currentIndex += 1;
-    }
-    return items;
-
-    }
+ 
+    
 }
