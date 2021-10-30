@@ -51,11 +51,13 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         collectionName = name();
         collectionNameSymbol = symbol();
     }
-// this function is used to transfer ether to govt account
- function withdraw() public payable onlyOwner {
+
+    // this function is used to transfer ether to govt account
+    function withdraw() public payable onlyOwner {
         address payable _owner = payable(owner());
         _owner.transfer(address(this).balance);
     }
+
     // create new cryptostate
     // Creation
 
@@ -117,37 +119,40 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         );
     }
 
-       //getting the pricing list
+    //getting the pricing list
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
     }
+
     // get owner of the token
     function getTokenOwner(uint256 _tokenId) public view returns (address) {
-        
         address _tokenOwer = ownerOf(_tokenId);
         return _tokenOwer;
     }
+
     // to feel after sometime
     function getTokenMetadata(uint256 _tokenId)
         public
         view
         returns (string memory)
     {
-    string memory tokenMetaData = tokenURI(_tokenId);
-    return tokenMetaData;
+        string memory tokenMetaData = tokenURI(_tokenId);
+        return tokenMetaData;
     }
 
-     // get the number of token that created till the function is called
+    // get the number of token that created till the function is called
     function getNumberOfTokensMinted() public view returns (uint256) {
         uint256 totalNumberofTokensMinted = cryptoStateCouter.current();
         return totalNumberofTokensMinted;
     }
-      // get the number of the token owned by the  caller of the function
+
+    // get the number of the token owned by the  caller of the function
     function TokenownedByaddress(address _owner) public view returns (uint256) {
         uint256 totalNumberofTokensowned = balanceOf(_owner);
         return totalNumberofTokensowned;
     }
-    function buyToken(uint256 _tokenId) public payable{
+
+    function buyToken(uint256 _tokenId) public payable {
         require(msg.sender != address(0), "address must not be null");
         // token it must be exits
         require(_exists(_tokenId), "token must be exits on the contract");
@@ -156,30 +161,71 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         // we can not buy over own token
         require(msg.sender != tokenOnwer, "you can not buy your own token");
 
-          // getting token form the block chain
+        // getting token form the block chain
         CryptoState memory cryptostate = allCryptostate[_tokenId];
-  // the price must be equal to or greater then
+        // the price must be equal to or greater then
         require(
             msg.value >= cryptostate.price,
             "please Enter full price to buy"
         );
-         // it must be marked as for sale
+        // it must be marked as for sale
         require(cryptostate.forSale);
- // tansfer the owner ship
+        // tansfer the owner ship
         _transfer(tokenOnwer, msg.sender, _tokenId);
- // getting the current owner of the smart contract
+        // getting the current owner of the smart contract
         address payable sendTo = cryptostate.currentOwner;
-          // sending the token worth to the owner of the  token
+        // sending the token worth to the owner of the  token
         sendTo.transfer(msg.value);
 
-            //update  pervious owner
+        //update  pervious owner
         cryptostate.perviousOwner = cryptostate.currentOwner;
         // update the current owner
         cryptostate.currentOwner = payable(msg.sender);
 
         // set and update the data of token
         allCryptostate[_tokenId] = cryptostate;
-
     }
-  
+        // change the price oft the token
+    function changeTokenPrice(uint256 _tokenId, uint256 _newPrice)
+        public
+        payable
+    {
+        // address must not be empty
+        require(msg.sender != address(0));
+
+        require(msg.value >= listingPrice);
+
+        address tokenOnwer = ownerOf(_tokenId);
+
+        require(tokenOnwer == msg.sender);
+
+        CryptoState memory cryptostate = allCryptostate[_tokenId];
+        //update the price
+        cryptostate.price = _newPrice;
+    }
+     function toggleForSale(uint256 _tokenId) public payable {
+        require(msg.sender != address(0));
+        // require caller of the function is not an empty address
+        // require that token should exist
+        require(_exists(_tokenId));
+        // get the token's owner
+        address tokenOwner = ownerOf(_tokenId);
+        // check that token's owner should be equal to the caller of the function
+        require(tokenOwner == msg.sender);
+        // get that token from all crypto boys mapping and create a memory of it defined as (struct => CryptoBoy)
+
+        CryptoState memory cryptostate = allCryptostate[_tokenId];
+
+        if (cryptostate.forSale) {
+            cryptostate.forSale = false;
+        } else {
+            cryptostate.forSale = true;
+        }
+        // set and update that token in the mapping
+        allCryptostate[_tokenId] = cryptostate;
+    }
+    // get all the sold proudct
+    // we can do for this at front end
+    // fetch my own NFT we can do for it on front-end
+
 }

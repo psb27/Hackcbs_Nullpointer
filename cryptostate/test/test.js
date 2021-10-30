@@ -43,13 +43,11 @@ contract(CryptoState, ([deployer, author, tipper]) => {
     let Number_of_token_minted = await cryptostate.getNumberOfTokensMinted();
 
     console.log(Number_of_token_minted);
-    
   });
   it("testing funcition of the smart contract", async () => {
- 
-
     let token_owner = await cryptostate.getTokenOwner(1);
-
+    let listingPrice = await cryptostate.getListingPrice();
+    listingPrice = listingPrice.toString();
     console.log(token_owner);
 
     let Number_of_token_minted = await cryptostate.getNumberOfTokensMinted();
@@ -57,8 +55,12 @@ contract(CryptoState, ([deployer, author, tipper]) => {
     console.log(Number_of_token_minted.toNumber());
 
     // buying the token
-    let tokenbuy = await cryptostate.buyToken(1,{ from: author,value:100 });
-    console.log(tokenbuy)
-    
+    let tokenbuy = await cryptostate.buyToken(1, { from: author, value: 100 });
+    console.log(tokenbuy);
+    // changed the token price
+    let pricechanged = await cryptostate.changeTokenPrice(1, 100 ,{ from: author, value:listingPrice  });
+    console.log(pricechanged);
+    //put on salle
+    await cryptostate.toggleForSale(1, { from: author });
   });
 });
