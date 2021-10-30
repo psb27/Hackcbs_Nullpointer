@@ -35,7 +35,7 @@ function Navbar() {
            
             
         </nav>
->>>>>>> Stashed changes
+
     )
 }
 
