@@ -55,6 +55,10 @@ contract(CryptoState, ([deployer, author, tipper]) => {
     let Number_of_token_minted = await cryptostate.getNumberOfTokensMinted();
 
     console.log(Number_of_token_minted.toNumber());
+
+    // buying the token
+    let tokenbuy = await cryptostate.buyToken(1,{ from: author,value:100 });
+    console.log(tokenbuy)
     
   });
 });
