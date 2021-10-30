@@ -1,21 +1,13 @@
-<<<<<<< Updated upstream
-import React from 'react'
-=======
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Navbar.css';
->>>>>>> Stashed changes
 
 function Navbar() {
 
     const [ showMenu, setShowMenu ] = useState(false);
     return (
-<<<<<<< Updated upstream
-        <div>
-            Navbar
-        </div>
-=======
+
         <nav className="navbar m-5 flex justify-between item-center h-16 text-block relative shadow-sm">
             <Link to='/' className="pl-8">
                 CryptoState
