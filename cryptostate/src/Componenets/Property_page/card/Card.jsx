@@ -9,7 +9,8 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import "./Card.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
-export default function MediaCard() {
+export default function MediaCard({pro}) {
+  console.log(pro)
   const info = {
     owner: "0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d",
     price: 10,
@@ -28,15 +29,15 @@ export default function MediaCard() {
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Owner:0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d
+            Owner:{pro.owner}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Price:
             <AttachMoneyIcon className="monye" />
-            10
+            {pro.price}
           </Typography>
           <Typography variant="body2" csolor="text.secondary">
-            Place:Bhopal
+            Place:{pro.placename}
           </Typography>
         </CardContent>
         <CardActions>

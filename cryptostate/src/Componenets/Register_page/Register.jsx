@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -6,12 +6,69 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import './Register.css'
+import { ethers } from "ethers";
+
+import { create as  ipfsHttpClient } from "ipfs-http-client";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { LocalConvenienceStoreOutlined, PermMedia } from "@mui/icons-material";
 import { Grid, TextField } from "@mui/material";
+import { setstate } from "../../ContextApi/Contextapi";
+const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 function Register() {
-  const [state, setstate] = useState("");
-  console.log(state);
+
+   const [price, setprice] = useState()
+   const [city, setcity] = useState()
+   
+   const [etherAddress, setetherAddress] = useState()
+
+   const [placeaddress, setplaceaddress] = useState()
+
+   const [image, setimage] = useState()
+  const [forsell, setforsell] = useState(false)
+   const {contract,account} = useContext(setstate);
+// const router = useRouter()
+   console.log(contract)
+   const handle = async (e) => {
+    const file = e.target.files[0];
+    try {
+      // here we are going to upload file to ipfs
+      const added = await client.add(file, {
+        progress: (prog) => console.log("recevied:", { prog }),
+      });
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+    
+      console.log(url)
+   
+    } catch (error) {}
+  };
+
+  const createItem = async (e) => {
+
+    e.preventDefault();
+    const data = JSON.stringify({
+      city:city,
+      place:placeaddress,
+      image:image,
+    });
+    console.log(data)
+    try {
+      // here we are going to upload file to ipfs
+      const added = await client.add(data);
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setimage(url)
+      // createSell(url);
+    } catch (error) {
+      console.log(error);
+    }}
+    const createSell = async (e) => {
+      e.preventDefault();
+      let listingPrice = await contract.methods.getListingPrice().call()
+      let consts = await contract.methods.mintCryptoState(city,image,price,placeaddress,etherAddress,forsell).send({from:account,value:listingPrice });
+      console.log(consts)
+    
+      // router.push("/properties");
+    };
+
   return (
     <div classsName="Register">
       <Typography gutterBottom variant="h3" align="center">
@@ -33,14 +90,16 @@ function Register() {
                     variant="outlined"
                     fullWidth
                     required
+                    value={city}
+                    onChange={(e) => setcity(e.target.value)}
                   />
                 </Grid>
                 <Grid xs={12} sm={6} item>
                   <TextField
                     type="number"
                     placeholder="Enter price"
-                    value={state}
-                    onChange={(e) => setstate(e.target.value)}
+                    value={price}
+                    onChange={(e) => setprice(e.target.value)}
                     label="Price"
                     variant="outlined"
                     fullWidth
@@ -49,7 +108,8 @@ function Register() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    type="email"
+                         value={etherAddress}
+                         onChange={(e) => setetherAddress(e.target.value)}
                     placeholder="Enter Ethereum Address"
                     label="owner Address"
                     variant="outlined"
@@ -65,6 +125,8 @@ function Register() {
                     variant="outlined"
                     fullWidth
                     required
+                    value={forsell}
+                    onChange={(e)=>setforsell(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -77,7 +139,7 @@ function Register() {
                 type="file"
                 id="id"
                 accept=".png ,.jpeg,.jpg"
-                // onChange={handleChange}
+                onChange={handle}
               />
             </label>
                 </Grid>
@@ -90,6 +152,8 @@ function Register() {
                     variant="outlined"
                     fullWidth
                     required
+                    value={placeaddress}
+                    onChange={(e) => setplaceaddress(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -98,6 +162,18 @@ function Register() {
                     variant="contained"
                     color="primary"
                     fullWidth
+                    onClick={createItem}
+                  >
+                   Register
+                  </Button>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={createSell}
                   >
                    Register
                   </Button>
@@ -107,7 +183,7 @@ function Register() {
           </CardContent>
         </Card>
       </Grid>
-    
+
     </div>
   );
 }

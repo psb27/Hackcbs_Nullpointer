@@ -1,5 +1,6 @@
 
-
+import Cryptostate from '../abis/CryptoState.json'
+import Web3 from 'web3'
 
 
  const loadWeb3 = async () => {
@@ -22,15 +23,20 @@
     //Load account 
     const accounts = await web3.eth.getAccounts();
 
-    setaccount(accounts[0]);
+    console.log(accounts)
     // Network ID
     const networkId = await web3.eth.net.getId()
-    const networkData = ScureScan.networks[networkId]
+    console.log(Cryptostate)
+    
+    const networkData =  Cryptostate.networks[networkId]
+    console.log(Cryptostate.networks)
     if (networkData) {
-      scan = new web3.eth.Contract(ScureScan.abi, networkData.address)
-    console.log(scan)
+      scan = new web3.eth.Contract( Cryptostate.abi, networkData.address)
+       console.log(scan)
       console.log("successfully get contreact")
+      return scan
 
     }
 
   }
+  export {loadBlockchain,loadWeb3}
