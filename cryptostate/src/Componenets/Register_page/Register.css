@@ -1,0 +1,11 @@
+.shareoptin{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.shareoptin > span {
+    margin: 10px;
+}
+.Register{
+    display: flex;
+}
