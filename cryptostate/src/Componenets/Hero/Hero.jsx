@@ -1,11 +1,12 @@
 import React from 'react'
 
-function S() {
+export const Hero = () => {
     return (
         <div>
             
         </div>
-    )
+    );
 }
 
-export default S
+export default Hero;
+

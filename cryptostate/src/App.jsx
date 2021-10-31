@@ -5,6 +5,8 @@ import { Route, Switch } from "react-router";
 import "./App.css";
 import Detiles from "./Componenets/Detiles_page/Detiles";
 import Navbar from "./Componenets/navbar/Navbar";
+import Hero from "./Componenets/Hero/Hero";
+import HowItWorks from "./Componenets/Middle/How_it_works";
 import EngagementCardDemo from "./Componenets/Register_page/Register";
 import Property from "./Componenets/Property_page/Property";
 import Cryptostate from "./abis/CryptoState.json";
@@ -57,6 +59,8 @@ const [account, setaccount] = useState()
     <setstate.Provider value={{ contract,account }}>
        <div className="App">
       <Navbar />
+      <HowItWorks />
+      <Hero />
       <Switch>
         <Route path="/moreInfo" component={Detiles}>
           <Detiles />

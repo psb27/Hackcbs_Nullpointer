@@ -80,7 +80,7 @@ function Detiles() {
         <div className="btn_div">
 
           {
-            location.state. forsale ? (  <Button variant="contained"  onClick={buyItem} className="btn">
+            loaction.state. forsale ? (  <Button variant="contained"  onClick={buyItem} className="btn">
             Buy Now{" "}
           </Button>):(
 
