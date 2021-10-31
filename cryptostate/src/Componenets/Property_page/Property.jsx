@@ -33,6 +33,7 @@ function Property() {
     getallProp();
   }, []);
 
+  console.log(arr[0])
   return (
     <div className="main">
       {" "}
