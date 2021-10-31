@@ -51,6 +51,7 @@ function Property() {
               tokenId: item.tokenId,
               tokenURI: item.tokenURI,
               placename: item.tokenName,
+              forsale:item.forSale
             }}
           />
         ))

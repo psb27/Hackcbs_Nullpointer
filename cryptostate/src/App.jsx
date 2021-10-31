@@ -10,6 +10,7 @@ import Property from "./Componenets/Property_page/Property";
 import Cryptostate from "./abis/CryptoState.json";
 import Web3 from "web3";
 import { setstate } from "./ContextApi/Contextapi";
+import Home from "./Componenets/Home";
 
 function App() {
   const [contract, setcontract] = useState();
@@ -57,7 +58,10 @@ const [account, setaccount] = useState()
     <setstate.Provider value={{ contract,account }}>
        <div className="App">
       <Navbar />
-      <Switch>
+      <Switch> 
+      <Route  exact path="/"component={Detiles}>
+          <Home />
+        </Route>
         <Route path="/moreInfo" component={Detiles}>
           <Detiles />
         </Route>

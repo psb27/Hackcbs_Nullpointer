@@ -1,0 +1,50 @@
+.hero{
+
+    width:100%;
+    height:80vh;
+}
+
+.hero-image-container {
+    width:100%;
+    height: 80vh;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hero-image {
+    width: 100%;
+    height: 80vh;
+
+}
+
+.hero-info {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+
+}
+
+.hero-heading {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.hero-link {
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: rgb(212, 243, 126);
+    text-decoration: none;
+    color: black;
+    outline: none;
+    border-radius: 2px;
+    
+}
+
+.hero-link:hover {
+    background-color: #231945;
+    color: white;
+}

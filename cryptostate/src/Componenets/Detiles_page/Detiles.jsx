@@ -33,7 +33,7 @@ function Detiles() {
   
   };
   const loaction = useLocation();
-  
+  let forsale = loaction.state.forsale
  
   console.log(loaction.state)
   return (
@@ -80,7 +80,7 @@ function Detiles() {
         <div className="btn_div">
 
           {
-            location.state. forsale ? (  <Button variant="contained"  onClick={buyItem} className="btn">
+           forsale ? (  <Button variant="contained"  onClick={buyItem} className="btn">
             Buy Now{" "}
           </Button>):(
 
