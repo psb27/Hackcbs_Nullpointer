@@ -48,10 +48,11 @@ export default function MediaCard({ pro }) {
                 owner:pro?.owner,
                 price: pro?.price,
                 Place:pro?.placename,
-                Image:pro?.TokenURI,
+                Image:pro?.tokenURI,
                 adress: pro?.place,
                 oldowner:pro?.oldOwener,
                 tokenId:pro?.tokenId,
+                
               },
             }}
           >

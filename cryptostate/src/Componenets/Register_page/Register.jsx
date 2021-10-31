@@ -26,6 +26,7 @@ function Register() {
    const [image, setimage] = useState()
   const [forsell, setforsell] = useState(false)
    const {contract,account} = useContext(setstate);
+   console.log(account)
 // const router = useRouter()
    console.log(contract)
    const handle = async (e) => {
@@ -156,17 +157,7 @@ function Register() {
                     onChange={(e) => setplaceaddress(e.target.value)}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    onClick={createItem}
-                  >
-                   Register
-                  </Button>
-                </Grid>
+              
                 <Grid item xs={12}>
                   <Button
                     type="submit"

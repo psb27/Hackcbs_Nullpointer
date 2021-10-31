@@ -1,64 +1,72 @@
 import { useLocation } from "react-router";
 import "./Detiles.css";
+import { ethers } from "ethers";
 import Button from "@mui/material/Button";
 import React, { useContext, useEffect, useState } from "react";
 import { setstate } from "../../ContextApi/Contextapi";
 function Detiles() {
+  const { contract, account } = useContext(setstate);
   const buyItem = async (e) => {
     e.preventDefault();
-    let consts = await contract.methods
-      .buyToken(loaction.state?.TokenId)
-      .send({ from: account });
-    console.log(consts);
+  
+    const price = ethers.utils.parseUnits(loaction.state?.price.toString(), 'ether')   
+    let consts = await contract?.methods
+      .buyToken(loaction.state?.tokenId)
+      .send({ from:account,value:price });
+ 
   };
   const putonSalle = async (e) => {
     e.preventDefault();
     let consts = await contract.methods
-      .toggleForSale(loaction.state?.TokenId)
+      .toggleForSale(loaction.state?.tokenId)
       .send({ from: account });
-    console.log(consts);
+
   };
   const chnagePrice = async (e) => {
     e.preventDefault();
     let listingPrice = await contract.methods.getListingPrice().call()
+    let p = loaction.state?.price/2
+    const price = ethers.utils.parseUnits(p.toString(), 'ether')
     let consts = await contract.methods
-      .changeTokenPrice(loaction.state?.TokenId)
+      .changeTokenPrice(loaction.state?.tokenId,price)
       .send({ from: account,value:listingPrice });
-    console.log(consts);
+  
   };
   const loaction = useLocation();
-  console.log(loaction.state.owner);
-  const { contract, account } = useContext(setstate);
+  
+ 
+  console.log(loaction.state)
   return (
     <div>
       <div className="image">
-        <img src={"https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"} alt="" />
+        <img src={loaction.state?.Image}alt="" />
       </div>
 
       <div className="allinfo">
         <div>
-          <h3>TokenId:</h3> {loaction.state?.TokenId}
+          <h3>TokenId:</h3> {loaction.state?.tokenId}
         </div>
         <div>
           {" "}
-          <h3>Owner:</h3> {loaction.state.owner}
+          <h3>Owner:</h3> {loaction.state?.owner}
         </div>
         <div>
           {" "}
-          <h3>OldOwner:</h3> {loaction.state.oldowner}
+          <h3>OldOwner:</h3> {loaction.state?.oldowner}
         </div>
         <div>
           {" "}
-          <h3>Place:</h3> {loaction.state.place}
+          <h3>Place:</h3> {loaction.state?.adress}
         </div>
         <div>
-          <h3>createdBy:</h3> {loaction.state?.mintedBy}
+          <h3>price:</h3> {loaction.state?.price}
         </div>
+       
       </div>
       {loaction.state.owner == account  && account !== undefined ? (
         <div className="">
           <div className="btn_div">
-            <Button variant="contained" onClick={buyItem} className="btn">
+            <Button variant="contained" onClick={chnagePrice} className="btn">
               Incress Price{" "}
             </Button>
           </div>
@@ -70,9 +78,16 @@ function Detiles() {
         </div>
       ) : (
         <div className="btn_div">
-          <Button variant="contained" onClick={buyItem} className="btn">
+
+          {
+            location.state. forsale ? (  <Button variant="contained"  onClick={buyItem} className="btn">
             Buy Now{" "}
-          </Button>
+          </Button>):(
+
+            <h1>this is  curently not for sale</h1>
+          )
+          }
+        
         </div>
       )}
     </div>

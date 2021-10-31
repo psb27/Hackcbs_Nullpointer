@@ -204,9 +204,10 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
 
         require(tokenOnwer == msg.sender);
 
-        CryptoState memory cryptostate = allCryptostate[_tokenId];
+        CryptoState storage  cryptostate = allCryptostate[_tokenId];
         //update the price
         cryptostate.price = _newPrice;
+
     }
 
     function toggleForSale(uint256 _tokenId) public payable {
@@ -220,7 +221,7 @@ contract CryptoState is ERC721, Ownable, ReentrancyGuard {
         require(tokenOwner == msg.sender);
         // get that token from all crypto boys mapping and create a memory of it defined as (struct => CryptoBoy)
 
-        CryptoState memory cryptostate = allCryptostate[_tokenId];
+        CryptoState storage cryptostate = allCryptostate[_tokenId];
 
         if (cryptostate.forSale) {
             cryptostate.forSale = false;
