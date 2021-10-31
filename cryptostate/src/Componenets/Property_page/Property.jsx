@@ -7,25 +7,24 @@ function Property() {
   const { contract, account } = useContext(setstate);
   const [allProperty, setallProperty] = useState();
   console.log(contract);
-  const [loding, setloding] = useState(true);
+  const [loding, setloding] = useState(false);
   let arr = [];
   let i = 0;
   let TokenMinted;
   const getallProp = async () => {
-    let ar = []
+    let ar = [];
     let index = await contract?.methods.getNumberOfTokensMinted().call();
     for (let x = 1; x <= index; x++) {
-     arr[i]  = await contract?.methods.allCryptostate(x).call();
-     i++;
+      arr[i] = await contract?.methods.allCryptostate(x).call();
+      i++;
       // console.log(y);
-     
     }
-    if(arr.length > 0){
-       setloding(false)
+    if (arr.length > 0) {
+      setloding(false);
     }
-   
-    console.log(arr)
-    
+
+    console.log(arr);
+
     setallProperty(arr);
   };
 
@@ -40,7 +39,7 @@ function Property() {
       {loding ? (
         <h1>loading..</h1>
       ) : (
-        allProperty?.map((item,i) => (
+        allProperty?.map((item, i) => (
           <MediaCard
             pro={{
               owner: item.currentOwner,
@@ -50,10 +49,9 @@ function Property() {
               price: item.price,
               tokenId: item.tokenId,
               tokenURI: item.tokenURI,
-              placename:item.tokenName
+              placename: item.tokenName,
             }}
           />
-      
         ))
       )}
     </div>

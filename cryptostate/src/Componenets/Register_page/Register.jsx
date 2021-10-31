@@ -36,7 +36,7 @@ function Register() {
         progress: (prog) => console.log("recevied:", { prog }),
       });
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-    
+      setimage(url)
       console.log(url)
    
     } catch (error) {}
@@ -55,7 +55,7 @@ function Register() {
       // here we are going to upload file to ipfs
       const added = await client.add(data);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      setimage(url)
+      
       // createSell(url);
     } catch (error) {
       console.log(error);

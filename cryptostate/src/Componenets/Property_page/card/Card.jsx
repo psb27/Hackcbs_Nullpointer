@@ -9,8 +9,8 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import "./Card.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
-export default function MediaCard({pro}) {
-  console.log(pro)
+export default function MediaCard({ pro }) {
+  console.log(pro);
   const info = {
     owner: "0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d",
     price: 10,
@@ -29,15 +29,15 @@ export default function MediaCard({pro}) {
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Owner:{pro.owner}
+            Owner:{pro?.owner}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Price:
             <AttachMoneyIcon className="monye" />
-            {pro.price}
+            {pro?.price}
           </Typography>
           <Typography variant="body2" csolor="text.secondary">
-            Place:{pro.placename}
+            Place:{pro?.placename}
           </Typography>
         </CardContent>
         <CardActions>
@@ -45,15 +45,17 @@ export default function MediaCard({pro}) {
             to={{
               pathname: "/moreInfo",
               state: {
-                owner:"0xE11BA2b4D45Eaed5996Cd0823791E0C93114882d",
-                price:10,
-                Place:"Bhopal",
-                Image:"https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-                adress:"gandhi Bhopal 13"
+                owner:pro?.owner,
+                price: pro?.price,
+                Place:pro?.placename,
+                Image:pro?.TokenURI,
+                adress: pro?.place,
+                oldowner:pro?.oldOwener,
+                tokenId:pro?.tokenId,
               },
             }}
           >
-            <Button size="small">
+            <Button size="small" className="likns">
               {" "}
               More Info <ArrowForwardIosIcon className="monye" />
             </Button>
